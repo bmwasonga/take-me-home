@@ -3,7 +3,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { ChakraProvider } from '@chakra-ui/react';
 
 const client = new ApolloClient({
-  uri: process.env.API_ENDPOINT,
+  uri: 'https://graphql-user-api.herokuapp.com/graphql',
   cache: new InMemoryCache(),
 });
 
