@@ -3,11 +3,13 @@ import {
   chakra,
   Center,
   Box,
+  Button,
   useColorModeValue,
   SimpleGrid,
   GridItem,
   Heading,
-  Text,
+  InputRightElement,
+  InputGroup,
   Stack,
   FormControl,
   FormLabel,
@@ -16,18 +18,20 @@ import {
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import validator from 'validator';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 const SignInForm = () => {
+  const [show, setShow] = React.useState(false);
+  const handleClick = () => setShow(!show);
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => console.log(data);
 
   return (
-    <Box bg="tomato" w="100%" h="100%" p={4}>
+    <Box bg="tomato" w="100%" h="100%" p={4} minW="inherit">
       {/* find a way to center this container */}
       <Center h="100%">
         <Box mt={[10, 0]}>
@@ -60,7 +64,9 @@ const SignInForm = () => {
                   <FormControl isInvalid={errors.firstName}>
                     <FormLabel htmlFor="firstName">FIrst Name</FormLabel>
                     <Input
-                      id="firstName"
+                      autocomplete="off"
+                      variant="flushed"
+                      p="2"
                       {...register('firstName', {
                         required: 'firstName is required',
                         minLength: {
@@ -79,6 +85,8 @@ const SignInForm = () => {
                     <FormLabel htmlFor="secondName">Second Name</FormLabel>
                     <Input
                       id="secondName"
+                      variant="flushed"
+                      p="2"
                       {...register('secondName', {
                         required: 'Secnd name is required',
                         minLength: {
@@ -98,6 +106,8 @@ const SignInForm = () => {
                     <Input
                       id="email"
                       type="email"
+                      variant="flushed"
+                      p="2"
                       {...register('email', {
                         required: 'Email address is required',
                         validate: (value) => {
@@ -106,6 +116,7 @@ const SignInForm = () => {
                         },
                       })}
                     />
+
                     <FormErrorMessage>
                       {errors.email && errors.email.message}
                     </FormErrorMessage>
@@ -113,37 +124,55 @@ const SignInForm = () => {
 
                   <FormControl isInvalid={errors.password}>
                     <FormLabel htmlFor="password">Password</FormLabel>
-                    <Input
-                      id="password"
-                      type="password"
-                      {...register('password', {
-                        required: 'Password is required',
-                        minLength: {
-                          value: 6,
-                          message: 'Minimum length should be 6',
-                        },
-                      })}
-                    />
+                    <InputGroup size="md">
+                      <Input
+                        id="password"
+                        type={show ? 'text' : 'password'}
+                        variant="flushed"
+                        p="2"
+                        {...register('password', {
+                          required: 'Password is required',
+                          minLength: {
+                            value: 6,
+                            message: 'Minimum length should be 6',
+                          },
+                        })}
+                      />
+                      <InputRightElement width="4.5rem">
+                        <Button h="1.75rem" size="sm" onClick={handleClick}>
+                          {show ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                        </Button>
+                      </InputRightElement>
+                    </InputGroup>
                     <FormErrorMessage>
                       {errors.password && errors.password.message}
                     </FormErrorMessage>
                   </FormControl>
 
                   <FormControl isInvalid={errors.password}>
-                    <FormLabel htmlFor="password">Confirm Password</FormLabel>
-                    <Input
-                      id="password"
-                      type="password"
-                      {...register('password', {
-                        required: 'Password is required',
-                        minLength: {
-                          value: 6,
-                          message: 'Minimum length should be 6',
-                        },
-                      })}
-                    />
+                    <FormLabel htmlFor="password2">Confirm Password</FormLabel>
+                    <InputGroup>
+                      <Input
+                        id="password2"
+                        type={show ? 'text' : 'password'}
+                        variant="flushed"
+                        p="2"
+                        {...register('password2', {
+                          required: 'Password is required',
+                          minLength: {
+                            value: 6,
+                            message: 'Minimum length should be 6',
+                          },
+                        })}
+                      />
+                      <InputRightElement width="4.5rem">
+                        <Button h="1.75rem" size="sm" onClick={handleClick}>
+                          {show ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                        </Button>
+                      </InputRightElement>
+                    </InputGroup>
                     <FormErrorMessage>
-                      {errors.password && errors.password.message}
+                      {errors.password2 && errors.password2.message}
                     </FormErrorMessage>
                   </FormControl>
                 </Stack>
