@@ -61,7 +61,7 @@ const SignInForm = () => {
               <FormControl isInvalid={errors.firstName}>
                 <FormLabel htmlFor="firstName">FIrst Name</FormLabel>
                 <Input
-                  autocomplete="off"
+                  autoComplete="off"
                   variant="flushed"
                   p="2"
                   {...register('firstName', {
@@ -176,12 +176,9 @@ const SignInForm = () => {
               </Button>
               <Stack>
                 <Link href="/signin">
-                  <a>Don't have a account? </a>
+                  <a>Already a member? </a>
                 </Link>
                 <Spacer />
-                <Link href="#">
-                  <a>Forgot your password?</a>
-                </Link>
               </Stack>
             </Stack>
           </chakra.form>

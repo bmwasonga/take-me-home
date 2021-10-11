@@ -37,14 +37,19 @@ const SignUpForm = () => {
   const [login, { data, error, loading }] = useMutation(LOGIN_USER);
 
   const onSubmit = async (data) => {
+    const { email, password } = data;
     try {
-      console.log(data);
-      await login({ data });
-      router.push('/');
+      await login({ variables: { email, password } });
+      console.log('this is what we are passing', JSON.stringify(data));
     } catch (error) {
       console.log('Error is: ', error);
     }
   };
+
+  if (loading) return 'Submitting...';
+  if (error) return `Submission error! ${error.message}`;
+
+  console.log('this is what we are to get', data);
 
   return (
     <Flex
@@ -117,20 +122,14 @@ const SignUpForm = () => {
                   {errors.password && errors.password.message}
                 </FormErrorMessage>
               </FormControl>
-              <Box border="1px" borderColor="gray.200" p="2">
-                <Button w="full" colorScheme="blue" type="submit">
-                  Sign up
-                </Button>
-                <Stack>
-                  <Link href="/signup">
-                    <a>Don't have a account? </a>
-                  </Link>
-                  <Spacer />
-                  <Link href="/">
-                    <a>Forgot your password?</a>
-                  </Link>
-                </Stack>
-              </Box>
+              <Button w="full" colorScheme="blue" type="submit">
+                Sign up
+              </Button>
+              <Stack>
+                <Link href="/signup">
+                  <a>Don't have a account? </a>
+                </Link>
+              </Stack>
             </Stack>
           </chakra.form>
         </Box>
