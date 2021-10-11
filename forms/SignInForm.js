@@ -19,9 +19,11 @@ import {
   Input,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import { useForm } from 'react-hook-form';
 import validator from 'validator';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
+import { useForm } from 'react-hook-form';
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../api';
 
 const SignUpForm = () => {
   const [show, setShow] = React.useState(false);
@@ -31,7 +33,18 @@ const SignUpForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  const [login, { data, error, loading }] = useMutation(LOGIN_USER);
+
+  const onSubmit = async (data) => {
+    try {
+      console.log(data);
+      await login({ data });
+      router.push('/');
+    } catch (error) {
+      console.log('Error is: ', error);
+    }
+  };
 
   return (
     <Flex
@@ -49,19 +62,15 @@ const SignUpForm = () => {
           bg={useColorModeValue('white', 'gray.700')}
           boxShadow={'lg'}
           p={8}
+          w={[400, 500]}
         >
           <chakra.form
+            onSubmit={handleSubmit(onSubmit)}
             method="POST"
             rounded={[null, 'md']}
             overflow={{ sm: 'hidden' }}
           >
-            <Stack
-              px={4}
-              py={5}
-              p={[null, 6]}
-              spacing={6}
-              w={('80vh', '100vh')}
-            >
+            <Stack px={4} py={5} p={[null, 6]} spacing={6}>
               <FormControl isInvalid={errors.email}>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input
@@ -93,7 +102,7 @@ const SignUpForm = () => {
                     {...register('password', {
                       required: 'Password is required',
                       minLength: {
-                        value: 6,
+                        value: 4,
                         message: 'Minimum length should be 6',
                       },
                     })}
@@ -108,17 +117,20 @@ const SignUpForm = () => {
                   {errors.password && errors.password.message}
                 </FormErrorMessage>
               </FormControl>
-
-              <Button colorScheme="blue"> Sign up</Button>
-              <Stack>
-                <Link href="/signup">
-                  <a>Don't have a account? </a>
-                </Link>
-                <Spacer />
-                <Link href="/">
-                  <a>Forgot your password?</a>
-                </Link>
-              </Stack>
+              <Box border="1px" borderColor="gray.200" p="2">
+                <Button w="full" colorScheme="blue" type="submit">
+                  Sign up
+                </Button>
+                <Stack>
+                  <Link href="/signup">
+                    <a>Don't have a account? </a>
+                  </Link>
+                  <Spacer />
+                  <Link href="/">
+                    <a>Forgot your password?</a>
+                  </Link>
+                </Stack>
+              </Box>
             </Stack>
           </chakra.form>
         </Box>

@@ -49,19 +49,15 @@ const SignInForm = () => {
           bg={useColorModeValue('white', 'gray.700')}
           boxShadow={'lg'}
           p={8}
+          w={[400, 500]}
         >
           <chakra.form
             method="POST"
+            onSubmit={handleSubmit(onSubmit)}
             rounded={[null, 'md']}
             overflow={{ sm: 'hidden' }}
           >
-            <Stack
-              px={4}
-              py={5}
-              p={[null, 6]}
-              spacing={6}
-              w={('80vh', '100vh')}
-            >
+            <Stack px={4} py={5} p={[null, 6]} spacing={6}>
               <FormControl isInvalid={errors.firstName}>
                 <FormLabel htmlFor="firstName">FIrst Name</FormLabel>
                 <Input
@@ -175,7 +171,9 @@ const SignInForm = () => {
                   {errors.password2 && errors.password2.message}
                 </FormErrorMessage>
               </FormControl>
-              <Button colorScheme="blue"> Sign up</Button>
+              <Button colorScheme="blue" type="submit">
+                Sign up
+              </Button>
               <Stack>
                 <Link href="/signin">
                   <a>Don't have a account? </a>
