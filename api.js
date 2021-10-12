@@ -13,3 +13,50 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const CREATE_USER = gql`
+  mutation createNewUser($input: CreateInput!) {
+    createUser(input: $input) {
+      user {
+        id
+        fullName
+        email
+      }
+      message
+      token
+      errors
+    }
+  }
+`;
+
+export const GET_USER_BY_ID = gql`
+  query getSingleUser($id: ID!) {
+    showUser(id: $id) {
+      id
+      email
+      fullName
+    }
+  }
+`;
+
+export const UPDATE_USER = gql`
+  mutation updateExistingUser($input: UpdateInput!) {
+    updateUser(input: $input) {
+      user {
+        id
+        fullName
+        email
+      }
+      errors
+    }
+  }
+`;
+
+export const DELETE_USER = gql`
+  mutation deleteExistingUser($input: DeleteInput!) {
+    deleteUser(input: $input) {
+      message
+      errors
+    }
+  }
+`;

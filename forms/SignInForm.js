@@ -18,6 +18,7 @@ import {
   FormErrorMessage,
   Input,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import validator from 'validator';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
@@ -26,6 +27,7 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../api';
 
 const SignUpForm = () => {
+  const router = useRouter();
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
   const {
@@ -40,7 +42,7 @@ const SignUpForm = () => {
     const { email, password } = data;
     try {
       await login({ variables: { email, password } });
-      console.log('this is what we are passing', JSON.stringify(data));
+      router.push('/');
     } catch (error) {
       console.log('Error is: ', error);
     }
