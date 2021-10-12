@@ -39,9 +39,8 @@ const SignUpForm = () => {
   const [login, { data, error, loading }] = useMutation(LOGIN_USER);
 
   const onSubmit = async (data) => {
-    const { email, password } = data;
     try {
-      await login({ variables: { email, password } });
+      await login({ variables: { input: { ...data } } });
       router.push('/');
     } catch (error) {
       console.log('Error is: ', error);
