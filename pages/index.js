@@ -1,13 +1,18 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
 import React from 'react';
+import { Details } from '../components/Details';
+import { HomeLayout } from '../layout/HomeLayout';
 
 const index = () => {
   return (
-    <div className={styles.container}>
-      <h1>If you can see this you have been signed in okay</h1>
-    </div>
+    <HomeLayout>
+      <Head>
+        <title>Home</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <Details />
+      <Details />
+    </HomeLayout>
   );
 };
 

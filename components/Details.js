@@ -1,2 +1,10 @@
-// define a functionality for viewing details of the current user based on the ID
-//include function to update if the user chooses to
+import React from 'react';
+import { Button } from '@chakra-ui/react';
+
+export const Details = () => {
+  return (
+    <div>
+      <Button colorScheme="blue">Sow details</Button>
+    </div>
+  );
+};

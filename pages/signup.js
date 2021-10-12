@@ -2,7 +2,6 @@ import React from 'react';
 import Head from 'next/head';
 
 import SignUpForm from '../forms/SignUpForm';
-import { InputLayout } from '../layout/InputLayout';
 
 const signup = () => {
   return (

@@ -1,11 +1,7 @@
 import '../styles/globals.css';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
 import { ChakraProvider } from '@chakra-ui/react';
-
-const client = new ApolloClient({
-  uri: 'https://graphql-user-api.herokuapp.com/graphql',
-  cache: new InMemoryCache(),
-});
+import { client } from '../client';
 
 function MyApp({ Component, pageProps }) {
   return (

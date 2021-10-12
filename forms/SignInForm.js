@@ -25,6 +25,7 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../api';
+import { Loading, Success, Failure } from '../components/LoadingStates';
 
 const SignUpForm = () => {
   const router = useRouter();
@@ -47,10 +48,8 @@ const SignUpForm = () => {
     }
   };
 
-  if (loading) return 'Submitting...';
-  if (error) return `Submission error! ${error.message}`;
-
-  console.log('this is what we are to get', data);
+  if (loading) return <Loading loading={loading} />;
+  if (error) return <Failure error={error} />;
 
   return (
     <Flex

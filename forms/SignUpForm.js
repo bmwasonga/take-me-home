@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   chakra,
   Center,
@@ -26,11 +26,16 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 const SignInForm = () => {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
+  const password = useRef({});
+  password.current = watch('password', '');
+
   const onSubmit = (data) => console.log(data);
 
   return (
@@ -126,11 +131,11 @@ const SignInForm = () => {
                     type={show ? 'text' : 'password'}
                     variant="flushed"
                     p="2"
-                    {...register('password', {
-                      required: 'Password is required',
+                    ref={register({
+                      required: 'You must specify a password',
                       minLength: {
-                        value: 6,
-                        message: 'Minimum length should be 6',
+                        value: 4,
+                        message: 'Password must have at least 8 characters',
                       },
                     })}
                   />
@@ -153,11 +158,11 @@ const SignInForm = () => {
                     type={show ? 'text' : 'password'}
                     variant="flushed"
                     p="2"
-                    {...register('password2', {
-                      required: 'Password is required',
+                    ref={register({
+                      required: 'You must specify a password',
                       minLength: {
-                        value: 6,
-                        message: 'Minimum length should be 6',
+                        value: 4,
+                        message: 'Password must have at least 8 characters',
                       },
                     })}
                   />

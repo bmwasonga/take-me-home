@@ -2,10 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Spinner } from '@chakra-ui/react';
 
-const LoadingStates = ({ loading, error, data, children }) => {
-  if (error) {
-    return <p>ERROR: {error.message}</p>;
-  }
+export const Loading = ({ loading }) => {
   if (loading) {
     return (
       <SpinnerContainer>
@@ -15,10 +12,19 @@ const LoadingStates = ({ loading, error, data, children }) => {
           emptyColor="gray.200"
           color="blue.500"
           size="xl"
-        />
+        />{' '}
       </SpinnerContainer>
     );
   }
+};
+
+export const Failure = ({ error }) => {
+  if (error) {
+    return <p>ERROR: {error.message}</p>;
+  }
+};
+
+export const Success = ({ data }) => {
   if (!data) {
     return <p>Nothing to show...</p>;
   }
@@ -27,4 +33,10 @@ const LoadingStates = ({ loading, error, data, children }) => {
   }
 };
 
-export default LoadingStates;
+const SpinnerContainer = styled.div({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  height: '100vh',
+});
