@@ -37,7 +37,15 @@ const SignUpForm = () => {
     formState: { errors },
   } = useForm();
 
-  const [login, { data, error, loading }] = useMutation(LOGIN_USER);
+  const [login, { data, error, loading }] = useMutation(LOGIN_USER, {
+    onCompleted({ login }) {
+      if (login) {
+        sessionStorage.setItem('token', login.token);
+        console.log(token);
+        sessionStorage.setItem('id', login.id);
+      }
+    },
+  });
 
   const onSubmit = async (data) => {
     try {

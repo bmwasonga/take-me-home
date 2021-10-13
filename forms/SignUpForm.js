@@ -1,13 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import {
   chakra,
-  Center,
   Box,
   Flex,
   Button,
   useColorModeValue,
-  SimpleGrid,
-  GridItem,
   Heading,
   InputRightElement,
   InputGroup,
@@ -21,22 +18,37 @@ import {
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import validator from 'validator';
+import { useMutation } from '@apollo/client';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { Loading, Success, Failure } from '../components/LoadingStates';
+import { CREATE_USER } from '../api';
 
 const SignInForm = () => {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
 
+  const [login, { data, error, loading }] = useMutation(CREATE_USER);
+
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
-  const password = useRef({});
-  password.current = watch('password', '');
 
-  const onSubmit = (data) => console.log(data);
+  const id = Math.floor(Math.random() * 10000) + 1;
+
+  const onSubmit = async (data) => {
+    try {
+      await login({ variables: { input: { ...data } } });
+      console.log(data);
+      router.push('/success');
+    } catch (error) {
+      console.log('Error is: ', error);
+    }
+  };
+
+  if (loading) return <Loading loading={loading} />;
+  if (error) return <Failure error={error} />;
 
   return (
     <Flex
@@ -83,13 +95,13 @@ const SignInForm = () => {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={errors.secondName}>
-                <FormLabel htmlFor="secondName">Second Name</FormLabel>
+              <FormControl isInvalid={errors.lastName}>
+                <FormLabel htmlFor="lastName">Second Name</FormLabel>
                 <Input
-                  id="secondName"
+                  id="lastName"
                   variant="flushed"
                   p="2"
-                  {...register('secondName', {
+                  {...register('lastName', {
                     required: 'Secnd name is required',
                     minLength: {
                       value: 3,
@@ -99,7 +111,7 @@ const SignInForm = () => {
                   })}
                 />
                 <FormErrorMessage>
-                  {errors.secondName && errors.secondName.message}
+                  {errors.lastName && errors.lastName.message}
                 </FormErrorMessage>
               </FormControl>
 
@@ -131,11 +143,11 @@ const SignInForm = () => {
                     type={show ? 'text' : 'password'}
                     variant="flushed"
                     p="2"
-                    ref={register({
-                      required: 'You must specify a password',
+                    {...register('password', {
+                      required: 'Password is required',
                       minLength: {
                         value: 4,
-                        message: 'Password must have at least 8 characters',
+                        message: 'Minimum length should be 6',
                       },
                     })}
                   />
@@ -150,32 +162,6 @@ const SignInForm = () => {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={errors.password}>
-                <FormLabel htmlFor="password2">Confirm Password</FormLabel>
-                <InputGroup>
-                  <Input
-                    id="password2"
-                    type={show ? 'text' : 'password'}
-                    variant="flushed"
-                    p="2"
-                    ref={register({
-                      required: 'You must specify a password',
-                      minLength: {
-                        value: 4,
-                        message: 'Password must have at least 8 characters',
-                      },
-                    })}
-                  />
-                  <InputRightElement width="4.5rem">
-                    <Button h="1.75rem" size="sm" onClick={handleClick}>
-                      {show ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-                <FormErrorMessage>
-                  {errors.password2 && errors.password2.message}
-                </FormErrorMessage>
-              </FormControl>
               <Button colorScheme="blue" type="submit">
                 Sign up
               </Button>

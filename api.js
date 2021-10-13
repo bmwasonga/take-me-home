@@ -7,6 +7,8 @@ export const LOGIN_USER = gql`
         id
         fullName
         email
+        firstName
+        lastName
       }
       token
       message
@@ -18,9 +20,8 @@ export const CREATE_USER = gql`
   mutation createNewUser($input: CreateInput!) {
     createUser(input: $input) {
       user {
-        id
-        fullName
-        email
+        firstName
+        lastName
       }
       message
       token
