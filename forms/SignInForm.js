@@ -40,9 +40,9 @@ const SignUpForm = () => {
   const [login, { data, error, loading }] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
       if (login) {
-        sessionStorage.setItem('token', login.token);
-        console.log(login.token);
-        sessionStorage.setItem('id', login.id);
+        window.sessionStorage.setItem('token', token);
+        console.log(token);
+        window.sessionStorage.setItem('id', login.id);
       }
     },
   });
@@ -56,6 +56,7 @@ const SignUpForm = () => {
     }
   };
 
+  console.log(data);
   if (loading) return <Loading loading={loading} />;
   if (error) return <Failure error={error} />;
 
