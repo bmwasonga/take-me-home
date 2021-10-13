@@ -41,7 +41,7 @@ const SignUpForm = () => {
     onCompleted({ login }) {
       if (login) {
         sessionStorage.setItem('token', login.token);
-        console.log(token);
+        console.log(login.token);
         sessionStorage.setItem('id', login.id);
       }
     },
