@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   chakra,
   Text,
@@ -37,15 +37,7 @@ const SignUpForm = () => {
     formState: { errors },
   } = useForm();
 
-  const [login, { data, error, loading }] = useMutation(LOGIN_USER, {
-    onCompleted({ login }) {
-      if (login) {
-        window.sessionStorage.setItem('token', token);
-        console.log(token);
-        window.sessionStorage.setItem('id', login.id);
-      }
-    },
-  });
+  const [login, { data, error, loading }] = useMutation(LOGIN_USER);
 
   const onSubmit = async (data) => {
     try {
@@ -56,7 +48,14 @@ const SignUpForm = () => {
     }
   };
 
-  console.log(data);
+  const [state, setState] = useState();
+
+  useEffect(() => {
+    setState(data);
+    localStorage.setItem('data', JSON.stringify(data));
+  }, [data]);
+
+  console.log('state', state);
   if (loading) return <Loading loading={loading} />;
   if (error) return <Failure error={error} />;
 

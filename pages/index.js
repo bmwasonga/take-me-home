@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import React from 'react';
-import { Details } from '../components/Details';
 import { HomeLayout } from '../layout/HomeLayout';
 import { Tabs, Box, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import Details from '../components/Details';
 
 const index = () => {
   return (
