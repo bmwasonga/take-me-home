@@ -2,10 +2,10 @@ import React from 'react';
 import { DELETE_USER } from '../api';
 import { useMutation } from '@apollo/client';
 import { Button } from '@chakra-ui/react';
+import { Loading, Failure } from './LoadingStates';
 
 const DeleteUser = ({ identifier }) => {
-  const [deleteExistingUser, { data, error, loading }] =
-    useMutation(DELETE_USER);
+  const [deleteExistingUser, { error, loading }] = useMutation(DELETE_USER);
 
   const onSubmit = async () => {
     try {
@@ -17,12 +17,16 @@ const DeleteUser = ({ identifier }) => {
 
   if (loading) return <Loading loading={loading} />;
   if (error) return <Failure error={error} />;
-  if (data) return <Details userData={data} />;
 
   return (
     <div>
-      <Button colorScheme="pink" variant="solid" onSubmit={onSubmit}>
-        Delete User
+      <Button
+        colorScheme="pink"
+        variant="solid"
+        type="submit"
+        onClick={onSubmit}
+      >
+        Delete User {identifier}
       </Button>
     </div>
   );
