@@ -1,22 +1,43 @@
 import React from 'react';
-import { Box, Flex, Spacer, Text } from '@chakra-ui/react';
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+} from '@chakra-ui/react';
 
-const Details = () => {
-  const data = localStorage.getItem('data');
-
-  console.log('My data', data);
-
+const Details = ({ userData }) => {
   return (
-    <Box>
-      <Flex>
-        <Text fontSize="3xl" as="em" p="2">
-          a
-        </Text>
-        <Text fontSize="3xl" p="2">
-          b
-        </Text>
-      </Flex>
-    </Box>
+    <Table size="sm">
+      <Thead>
+        <Tr>
+          <Th>Title</Th>
+          <Th>Detail</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        <Tr>
+          <Td>Id</Td>
+          <Td> {userData.loginUser.user.id}</Td>
+        </Tr>
+        <Tr>
+          <Td>First name</Td>
+          <Td>{userData.loginUser.user.firstName}</Td>
+        </Tr>
+        <Tr>
+          <Td>Last Name</Td>
+          <Td> {userData.loginUser.user.lastName}</Td>
+        </Tr>
+        <Tr>
+          <Td>Email</Td>
+          <Td> {userData.loginUser.user.email}</Td>
+        </Tr>
+      </Tbody>
+    </Table>
   );
 };
 

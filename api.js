@@ -20,6 +20,8 @@ export const CREATE_USER = gql`
   mutation createNewUser($input: CreateInput!) {
     createUser(input: $input) {
       user {
+        id
+        email
         firstName
         lastName
       }
