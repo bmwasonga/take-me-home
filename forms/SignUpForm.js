@@ -175,7 +175,7 @@ const SignUpForm = () => {
                   Sign up
                 </Button>
                 <Stack>
-                  <Link href="/signin">
+                  <Link href="/">
                     <a>Already a member? </a>
                   </Link>
                   <Spacer />

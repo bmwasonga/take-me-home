@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Spinner } from '@chakra-ui/react';
+import { Spinner, useToast } from '@chakra-ui/react';
 
 export const Loading = ({ loading }) => {
   if (loading) {
@@ -19,8 +19,18 @@ export const Loading = ({ loading }) => {
 };
 
 export const Failure = ({ error }) => {
+  const toast = useToast();
   if (error) {
-    return <p>ERROR: {error.message}</p>;
+    return (
+      <p>
+        ERROR: {error.message}
+        {toast({
+          title: `error toast`,
+          status: status,
+          isClosable: true,
+        })}
+      </p>
+    );
   }
 };
 
